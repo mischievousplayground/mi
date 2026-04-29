@@ -333,25 +333,21 @@ nav{
   padding:3px 9px;border-radius:4px;
   letter-spacing:.5px;
 }
-
 .live-badge{
   position:absolute;top:10px;left:10px;z-index:2;
   background:#2d2d2d;color:white;
   font-size:10px;font-weight:800;
-  padding:3px 9px;border-radius:4px;
-  letter-spacing:.5px;
-  display:flex;align-items:center;gap:3px;
-  animation:livepulse 2s ease-in-out infinite;
+  padding:3px 9px;border-radius:4px;letter-spacing:.4px;
 }
-@keyframes livepulse{0%,100%{opacity:1;}50%{opacity:.7;}}
-
 .soon-overlay{
   position:absolute;bottom:0;left:0;right:0;
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(2px);
-  text-align:center;padding:6px;
-  font-size:11px;font-weight:700;color:#aaa;
-  z-index:3;
+  background:rgba(255,255,255,.72);backdrop-filter:blur(2px);
+  text-align:center;padding:5px;
+  font-size:11px;font-weight:700;color:#aaa;z-index:3;
+}
+.zine-cover-full{
+  width:100%;aspect-ratio:3/4;object-fit:cover;
+  display:block;pointer-events:none;-webkit-user-drag:none;
 }
 
 .thumb-icon{
@@ -407,6 +403,7 @@ nav{
   #grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
+<script src="data.js"></script>
 </head>
 <body>
 
@@ -567,18 +564,12 @@ nav{
 </div>
 
 <script>
-// ── DATA (draft) ──
-const ZINES = [
-  { id:1, title:"lazy & affordable skincare routine", date:"may 18, 2024", tags:["skincare","routine","lazy"], isNew:true, bg:"linear-gradient(160deg,#ffd6e0,#ffc2ce)", pattern:"gingham-pink", icon:"♡", emoji:":)", link:"zines/skincare-routine.html", live:true },
-  { id:2, title:"how i check ingredients", date:"may 10, 2024", tags:["ingredient","learning"], isNew:false, bg:"linear-gradient(160deg,#e8d8f8,#d4b8f0)", pattern:"plain", icon:"☆", emoji:"🔍", link:"upcoming.html" },
-  { id:3, title:"night routine", date:"may 02, 2024", tags:["routine","skincare","night"], isNew:false, bg:"linear-gradient(160deg,#fff8dc,#ffe89a)", pattern:"gingham-blue", icon:"☆", emoji:"🌙", link:"upcoming.html" },
-  { id:4, title:"empties diary", date:"apr 28, 2024", tags:["empties","skincare","review"], isNew:true, bg:"linear-gradient(160deg,#d8f0e8,#b8e4d0)", pattern:"plain", icon:"✦", emoji:"💛", link:"upcoming.html" },
-  { id:5, title:"ingredient basics for beginners", date:"apr 20, 2024", tags:["ingredient","learning","basics"], isNew:false, bg:"linear-gradient(160deg,#ffeedd,#ffd4b0)", pattern:"plain", icon:"🧪", emoji:"", link:"upcoming.html" },
-  { id:6, title:"simple cleanser is enough", date:"apr 15, 2024", tags:["skincare","cleanser","minimal"], isNew:true, bg:"linear-gradient(160deg,#fde8f0,#ffcce0)", pattern:"plain", icon:"💧", emoji:"", link:"upcoming.html" },
-  { id:7, title:"japanese recycling labels guide", date:"apr 10, 2024", tags:["discovery","japan","sustainability"], isNew:false, bg:"linear-gradient(160deg,#e8f8e8,#c8ecc8)", pattern:"plain", icon:"♻️", emoji:"", link:"upcoming.html" },
-  { id:8, title:"a soft reminder for today", date:"apr 05, 2024", tags:["thoughts","life","reminder"], isNew:false, bg:"linear-gradient(160deg,#d8d0f8,#bfb0f0)", pattern:"stars", icon:"♡", emoji:"", link:"upcoming.html" }
-];
-const TAG_COUNTS = { skincare:12, routine:8, ingredient:10, learning:7, thoughts:6, life:5, random:4, empties:3 };
+// ── Use shared data from data.js ──
+const ZINES = window.ZINES_DATA || [];
+
+// Auto-compute tag counts from data
+const TAG_COUNTS = {};
+ZINES.forEach(z => z.tags.forEach(t => { TAG_COUNTS[t] = (TAG_COUNTS[t] || 0) + 1; }));
 </script>
 <script>
 // cursor
@@ -654,18 +645,17 @@ function renderZines() {
   }
 
   grid.innerHTML = list.map((z,i) => {
-    const patClass = z.pattern==='gingham-pink'?'gingham-pink':z.pattern==='gingham-blue'?'gingham-blue':z.pattern==='stars'?'stars-bg':'';
     const liveBadge = z.live ? '<span class="live-badge">✦ LIVE</span>' : '';
-    const newBadge = z.isNew && !z.live ? '<span class="new-badge">NEW</span>' : '';
+    const newBadge  = z.isNew && !z.live ? '<span class="new-badge">NEW</span>' : '';
+    const soon      = !z.live ? '<div class="soon-overlay">coming soon~</div>' : '';
+
+    const thumb = z.cover
+      ? `<div style="position:relative;">${liveBadge}<img class="zine-cover-full" src="${z.cover}" alt="${z.title}" loading="lazy"></div>`
+      : `<div class="zine-thumb" style="background:${z.bg};">${liveBadge}${newBadge}<div class="zine-thumb-title">${z.title}</div>${z.icon?`<span class="thumb-icon2">${z.icon}</span>`:''}${soon}</div>`;
+
     return `
-    <a href="${z.link}" class="zine-card" style="animation-delay:${i*.07}s;${!z.live?'opacity:.82':''}">
-      <div class="zine-thumb ${patClass}" style="background:${z.bg};">
-        ${liveBadge}${newBadge}
-        <div class="zine-thumb-title">${z.title}</div>
-        ${z.emoji?`<span class="thumb-icon">${z.emoji}</span>`:''}
-        ${z.icon?`<span class="thumb-icon2">${z.icon}</span>`:''}
-        ${!z.live?'<div class="soon-overlay">coming soon~</div>':''}
-      </div>
+    <a href="${z.link}" class="zine-card" style="animation-delay:${i*.07}s;${!z.live?'opacity:.85':''}">
+      ${thumb}
       <div class="zine-info">
         <div class="zine-name">${z.title}</div>
         <div class="zine-date">${z.date}</div>
