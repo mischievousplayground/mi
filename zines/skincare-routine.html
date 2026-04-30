@@ -45,8 +45,8 @@ nav{
 }
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2.5px;border-radius:2px;transform:scaleX(0);transition:transform .25s;transform-origin:left;}
 .nav-links a:nth-child(1)::after{background:#f4a7b9;}
-.nav-links a:nth-child(2)::after{background:#a8c8e8;}
-.nav-links a:nth-child(3)::after{background:#a8d8a8;}
+.nav-links a:nth-child(2)::after{background:#a8d8a8;}
+.nav-links a:nth-child(3)::after{background:#a8c8e8;}
 .nav-links a:nth-child(4)::after{background:#c9a6e8;}
 .nav-links a.active{color:#222;}
 .nav-links a.active::after,.nav-links a:hover::after{transform:scaleX(1);}
@@ -421,6 +421,52 @@ nav{
   .footer-sticky,.footer-right{display:none;}
   .fdoodle{display:none;}
 }
+
+/* ══════ DARK MODE ══════ */
+body.dark{
+  background:#15131f;
+  color:#f0ebf5;
+  background-image:
+    linear-gradient(rgba(180,160,220,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,160,220,.05) 1px,transparent 1px);
+  transition:background-color .5s ease,color .5s ease;
+}
+body.dark nav{background:rgba(21,19,31,.95);border-bottom-color:rgba(255,255,255,.06);}
+body.dark .nav-title{color:#f0ebf5;}
+body.dark .nav-sub{color:#8a7d99;}
+body.dark .nav-links a{color:#c9b8d8;}
+body.dark .nav-links a:hover,
+body.dark .nav-links a.active{color:#fff;}
+body.dark .sticky-nav{background:#3a3520;border-color:rgba(255,255,255,.08);color:#d8c997;}
+body.dark .nav-circle{border-color:#5a4a72;color:#8a7d99;}
+body.dark .torn{background:rgba(21,19,31,.95);border-bottom-color:rgba(255,255,255,.04);}
+body.dark .back-link{color:#8a7d99;}
+body.dark .back-link:hover{color:#f8b8c9;}
+body.dark .title-paper{background:#221f30;box-shadow:1px 2px 10px rgba(0,0,0,.3);}
+body.dark .title-paper h1{color:#fff;}
+body.dark .cat-speech-v{background:#221f30;border-color:#f0ebf5;color:#f0ebf5;}
+body.dark .cat-speech-v::after{border-top-color:#f0ebf5;}
+body.dark .cat-speech-v::before{border-top-color:#221f30;}
+body.dark .vtag{background:#221f30;border-color:rgba(255,255,255,.1);}
+body.dark .flip-btn{background:#221f30;border-color:rgba(255,255,255,.1);color:#c9b8d8;box-shadow:2px 3px 10px rgba(0,0,0,.3);}
+body.dark .flip-btn:hover{border-color:#f8b8c9;color:#f8b8c9;}
+body.dark .book{
+  background:#221f30;
+  border-color:rgba(255,255,255,.08);
+  box-shadow:0 2px 0 rgba(0,0,0,.2),0 12px 40px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.05);
+}
+body.dark .page-slot{background:#221f30;}
+body.dark .pg-num-badge{color:rgba(255,255,255,.25);}
+body.dark .fs-btn{background:rgba(34,31,48,.85);border-color:rgba(255,255,255,.1);color:#c9b8d8;}
+body.dark .fs-btn:hover{background:#221f30;border-color:#f8b8c9;color:#f8b8c9;}
+body.dark .footer-sticky{background:#3a2d52;border-color:rgba(255,255,255,.08);color:#d9bbf0;}
+body.dark .page-pill{background:#221f30;border-color:rgba(255,255,255,.1);color:#c9b8d8;box-shadow:1px 2px 6px rgba(0,0,0,.2);}
+body.dark .pi-sep{color:#5a4a72;}
+body.dark .dot{background:#3a2d52;}
+body.dark .read-random{color:#8a7d99;}
+body.dark .read-random:hover{color:#f8b8c9;}
+body.dark .kb-hint{color:#5a4a72;}
+body.dark .kb-key{border-color:#5a4a72;color:#8a7d99;}
 </style>
 </head>
 <body>
@@ -434,9 +480,9 @@ nav{
     <div class="nav-sub">small things i'm figuring out</div>
   </a>
   <div class="nav-links">
-    <a href="../zines.html" class="active">zines</a>
-    <a href="../words.html">word world</a>
-    <a href="../discovery.html">discovery</a>
+    <a href="../zines.html" class="active">scraps</a>
+    <a href="../discovery.html">lens</a>
+    <a href="../words.html">words</a>
     <a href="../about.html">about</a>
   </div>
   <div class="nav-right">
@@ -459,7 +505,7 @@ nav{
   <div class="top-bar">
     <a href="../zines.html" class="back-link">
       <svg width="14" height="14" viewBox="0 0 14 14"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      back to zines
+      back to scraps
     </a>
 
     <div class="title-strip">
@@ -819,5 +865,6 @@ function closeFS() {
 buildTrack();
 render();
 </script>
+<script src="../theme.js"></script>
 </body>
 </html>
