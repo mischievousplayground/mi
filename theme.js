@@ -121,6 +121,7 @@
   });
 })();
 
+/**
 // ── Cinnamoroll skating mascot ──
 (function(){
   const GIF = 'https://res.cloudinary.com/djenzu1lm/image/upload/v1777612581/cinnamoroll_n7iuee.gif';
@@ -185,3 +186,4 @@
 
   window.addEventListener('load', () => requestAnimationFrame(tick));
 })();
+**/
